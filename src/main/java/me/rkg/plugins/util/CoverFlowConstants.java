@@ -19,6 +19,11 @@ public final class CoverFlowConstants {
 	public static final String IMPROPER_NUMBER = "improperNumber";
 	public static final String GROUP_ID = "groupId";
 	public static final String CF_IMAGES_LIMIT = "cfImagesLimit";
+	
+	public static final String MIME_JPEG = "image/jpeg";
+	public static final String MIME_JPG = "image/jpg";
+	public static final String MIME_PNG = "image/png";
+	
 	public static final int DEFAULT_IMAGE_LIMIT = 6;
 	
 	public static final int IMAGES_LIMIT = (PortletProps.contains("images-limit") ? Integer.parseInt(PortletProps

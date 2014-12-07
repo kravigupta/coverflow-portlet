@@ -1,3 +1,6 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.liferay.portal.kernel.util.MimeTypesUtil"%>
+<%@page import="com.liferay.portal.kernel.util.MimeTypes"%>
 <%@include file="./init.jsp" %>
 
 <portlet:defineObjects />
@@ -6,8 +9,8 @@ PortletPreferences prefs = renderRequest.getPreferences();
 String folderIdStr = prefs.getValue(CoverFlowConstants.FOLDER_ID, StringPool.BLANK);
 if(StringPool.BLANK.equalsIgnoreCase(folderIdStr)){
 %>
-	<div>
-	<p>Please configure this portlet to use. You, at least, need to provide a folder where all the images are.</p>
+	<div class='portlet-description  aui-liferaymessage-content lfr-message-content lfr-message-help'>
+	Please configure this portlet to use. You, at least, need to provide a folder where all the images are.
 	</div>
 <%	
 }else{
@@ -22,7 +25,20 @@ if(StringPool.BLANK.equalsIgnoreCase(folderIdStr)){
 		imagesLimit = CoverFlowConstants.IMAGES_LIMIT;
 	}
 	ThemeDisplay themeDisplay = (ThemeDisplay) renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
-	         List<FileEntry> images = DLAppLocalServiceUtil.getFileEntries(themeDisplay.getScopeGroupId(), folderId);   
+	List<FileEntry>   fileEntries = DLAppLocalServiceUtil.getFileEntries(themeDisplay.getScopeGroupId(), folderId);
+	         
+	List<FileEntry> images = new ArrayList<FileEntry>();
+     int countImages = 0; 
+     for(FileEntry f: fileEntries){
+    	 if(f.getMimeType().equalsIgnoreCase(CoverFlowConstants.MIME_JPEG) || 
+    			 f.getMimeType().equalsIgnoreCase(CoverFlowConstants.MIME_PNG) || 
+    			 f.getMimeType().equalsIgnoreCase(CoverFlowConstants.MIME_JPG)){
+    		 countImages++;
+    		 images.add(f);
+    	 }
+     }
+     imagesLimit = countImages >imagesLimit ? imagesLimit : countImages;
+     
 	%>
 	<script type="text/javascript">
 	$(document).ready(function(){
@@ -30,6 +46,9 @@ if(StringPool.BLANK.equalsIgnoreCase(folderIdStr)){
 	});
 	    
 	</script>
+	<%
+	if(imagesLimit>0){
+	%>
 	<div id="contentFlow" class="ContentFlow">
 	    <!-- should be place before flow so that contained images will be loaded first -->
 	    <div class="loadIndicator"><div class="indicator"></div></div>
@@ -52,4 +71,13 @@ if(StringPool.BLANK.equalsIgnoreCase(folderIdStr)){
 	    </div>
 	
 	</div>
+	<%
+	}else{%>
+		<div class='portlet-description  aui-liferaymessage-content lfr-message-content lfr-message-help'>
+		There are no images to be displayed, Please make sure you add images in a folder and configure the folder in portlet configuration.
+		</div>
+		<%
+	}
+	%>
+	
 <% } %>
