@@ -1,3 +1,4 @@
+<%@page import="me.rkg.plugins.util.FileEntryComparator"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.liferay.portal.kernel.util.MimeTypesUtil"%>
 <%@page import="com.liferay.portal.kernel.util.MimeTypes"%>
@@ -38,7 +39,7 @@ if(StringPool.BLANK.equalsIgnoreCase(folderIdStr)){
     	 }
      }
      imagesLimit = countImages >imagesLimit ? imagesLimit : countImages;
-     
+     Collections.sort(images, new FileEntryComparator());
 	%>
 	<script type="text/javascript">
 	$(document).ready(function(){
