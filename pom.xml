@@ -89,6 +89,8 @@
 		</dependency>
 	</dependencies>
 	<properties>
-		<service.api.dir>src/main/java-service-api</service.api.dir>
+	    <liferay.version>6.1.20</liferay.version>
+	    <liferay.maven.plugin.version>6.1.20</liferay.maven.plugin.version>
+   		<liferay.auto.deploy.dir>D:\\pFiles\\Liferay\\6120EE\\liferay-portal-6.1.20-ee-ga2\\deploy</liferay.auto.deploy.dir>
 	</properties>
 </project>
