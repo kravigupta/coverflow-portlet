@@ -23,6 +23,11 @@
 				<th>Action</th>
 			</tr>
 			<%
+			if(folders.size()==0){
+				%>
+				<tr><td  colspan="2"><div class='portlet-description  aui-liferaymessage-content lfr-message-content lfr-message-help'>There is no folder present in the repository. Please create one to store images for cover flow.</div></td></tr>
+				<%
+			}
 				for(Folder f: folders){
 			%>
 			<tr title="<%=f.getFolderId()%>">
@@ -67,12 +72,6 @@ String imageLimit =  (String)request.getAttribute(CoverFlowConstants.CF_IMAGES_L
 </form>
 
 <script type="text/javascript">
-	$(document).ready(function() {
-		$(".folderIdBtn").click(function(event) {
-			event.preventDefault();
-			$("#folderId").val($(this).closest("tr").attr("title"));
-			$("#folderIdSubmitForm").submit();
-		});
-	});
+	
 </script>
 <hr />
